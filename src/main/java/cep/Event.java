@@ -1,23 +1,24 @@
 package cep;
 
-import java.util.Date;
+import java.time.LocalTime;
 
 public class Event {
-    private String  station;
-    private Date timestamp;
-    private float value;
+    public String  station;
+    public LocalTime timestamp;
+    public float value;
 
-    public Event(String station, Date timestamp, float value){
+    public Event(String station, LocalTime timestamp, float value){
         this.station = station;
         this.timestamp = timestamp;
         this.value = value;
     }
 
     public String getStation() { return this.station; }
-    public Date getTimestamp() {
-        return timestamp;
+    public LocalTime getTimestamp() {
+        return LocalTime.now();
     }
     public float getValue() {
         return value;
     }
+
 }

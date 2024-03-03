@@ -1,10 +1,9 @@
 package cep;
 
-import java.util.Date;
+import java.time.LocalTime;
 
 public class WindSpeedEvent extends Event{
-
-    public WindSpeedEvent(String station, Date timestamp, float value){
+    public WindSpeedEvent(String station, LocalTime timestamp, float value){
         super(station, timestamp, value);
     }
 

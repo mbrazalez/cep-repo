@@ -1,9 +1,9 @@
 package cep;
 
-import java.util.Date;
+import java.time.LocalTime;
 
 public class HumidityEvent extends Event {
-    public HumidityEvent(String station, Date timestamp, float value){
+    public HumidityEvent(String station, LocalTime timestamp, float value){
        super(station, timestamp, value);
     }
 
@@ -11,4 +11,5 @@ public class HumidityEvent extends Event {
     public String toString() {
         return "HumidityEvent [" + this.getValue() + "]";
     }
+
 }

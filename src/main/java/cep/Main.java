@@ -1,7 +1,10 @@
 package cep;
 
+import cep.subscribers.RandomEventGenerator;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        RandomEventGenerator randomEventGenerator = new RandomEventGenerator(100);
+        randomEventGenerator.run();
     }
 }

@@ -1,9 +1,9 @@
 package cep;
 
-import java.util.Date;
-public class PM10Event extends Event {
+import java.time.LocalTime;
 
-    public PM10Event(String station, Date timestamp, float value){
+public class PM10Event extends Event {
+    public PM10Event(String station, LocalTime timestamp, float value){
        super(station, timestamp, value);
     }
 

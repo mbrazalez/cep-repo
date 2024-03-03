@@ -1,36 +1,50 @@
 package cep;
 
 import cep.subscribers.PM10EventSubscriber;
-import com.espertech.esper.client.Configuration;
-import com.espertech.esper.client.EPServiceProvider;
-import com.espertech.esper.client.EPServiceProviderManager;
-import com.espertech.esper.client.EPStatement;
+import com.espertech.esper.client.*;
 
 public class CEPEngineFactory {
-    private EPServiceProvider epServiceProvider;
-    private EPStatement pm10EventStatement;
-    private PM10EventSubscriber pm10EventSubscriber;
+    public EPServiceProvider epServiceProvider;
+    public EPStatement pm10EventStatement;
+    public PM10EventSubscriber pm10EventSubscriber;
+    StatementAwareUpdateListener listener = new StatementAwareUpdateListener() {
+        @Override
+        public void update(EventBean[] newComplexEvents, EventBean[] oldComplexEvents, EPStatement detectedPattern, EPServiceProvider epService) {
+            if (newComplexEvents != null){
+                EventBean lastEvent = newComplexEvents[0];
+                System.out.println("\n************************************************************************************************************************");
+                System.out.println("[ALERT] : HIGH PM10 LEVELS FOUND! at " + lastEvent.get("station") + " with a " + lastEvent.get("averagePM10") + " level");
+                System.out.println("**************************************************************************************************************************");
+
+            }
+        }
+    };
 
     public CEPEngineFactory(){
+        this.pm10EventSubscriber = new PM10EventSubscriber();
         Configuration conf = new Configuration();
         createPM10schema(conf);
         this.epServiceProvider = EPServiceProviderManager.getDefaultProvider(conf);
         this.createPM10ComplexEvent();
     }
 
-    private static void createPM10schema(Configuration config){
+    private void createPM10schema(Configuration config){
         config.addEventType(PM10Event.class);
-        System.out.printf("******************************************************");
-        System.out.printf("PM10 Simple Event Schema Created!");
-        System.out.printf("******************************************************");
+        System.out.printf("\n******************************************************");
+        System.out.printf("\nPM10 Simple Event Schema Created!");
+        System.out.printf("\n******************************************************");
     }
 
     private void createPM10ComplexEvent(){
         this.pm10EventStatement = this.epServiceProvider.getEPAdministrator().createEPL(this.pm10EventSubscriber.getDefinedPattern());
-        this.pm10EventStatement.setSubscriber(this.pm10EventSubscriber);
-        System.out.printf("******************************************************");
-        System.out.printf("CEP Engine is ready for processing the incoming data!");
-        System.out.printf("******************************************************");
+        this.pm10EventStatement.addListener(listener);
+        System.out.printf("\n******************************************************");
+        System.out.printf("\nCEP Engine is ready for processing the incoming data!");
+        System.out.printf("\n******************************************************");
+    }
+
+    public void sendEventToTheEngine(PM10Event event){
+        this.epServiceProvider.getEPRuntime().sendEvent(event);
     }
 
 }
