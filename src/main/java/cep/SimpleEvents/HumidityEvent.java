@@ -1,4 +1,4 @@
-package cep;
+package cep.SimpleEvents;
 
 import java.time.LocalTime;
 
@@ -11,5 +11,4 @@ public class HumidityEvent extends Event {
     public String toString() {
         return "HumidityEvent [" + this.getValue() + "]";
     }
-
 }

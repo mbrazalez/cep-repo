@@ -1,11 +1,11 @@
-package cep;
+package cep.SimpleEvents;
 
 import java.time.LocalTime;
 
 public class Event {
-    public String  station;
-    public LocalTime timestamp;
-    public float value;
+    private String  station;
+    private LocalTime timestamp;
+    private float value;
 
     public Event(String station, LocalTime timestamp, float value){
         this.station = station;
@@ -15,10 +15,9 @@ public class Event {
 
     public String getStation() { return this.station; }
     public LocalTime getTimestamp() {
-        return LocalTime.now();
+        return timestamp;
     }
     public float getValue() {
         return value;
     }
-
 }

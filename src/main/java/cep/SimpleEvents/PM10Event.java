@@ -1,4 +1,4 @@
-package cep;
+package cep.SimpleEvents;
 
 import java.time.LocalTime;
 
@@ -11,5 +11,4 @@ public class PM10Event extends Event {
     public String toString() {
         return "PM10Event [" + this.getValue() + "]";
     }
-
 }
